@@ -1,0 +1,8 @@
+C:\Software Development\Work\SQLTabletoClass\SQLTabletoClass\bin\Debug\SQLTabletoClass.exe
+C:\Software Development\Work\SQLTabletoClass\SQLTabletoClass\bin\Debug\SQLTabletoClass.pdb
+C:\Software Development\Work\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.csprojResolveAssemblyReference.cache
+C:\Software Development\Work\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.Form1.resources
+C:\Software Development\Work\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.Properties.Resources.resources
+C:\Software Development\Work\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.csproj.GenerateResource.Cache
+C:\Software Development\Work\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.exe
+C:\Software Development\Work\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.pdb
