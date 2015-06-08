@@ -6,3 +6,11 @@ C:\Software Development\Work\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTablet
 C:\Software Development\Work\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.csproj.GenerateResource.Cache
 C:\Software Development\Work\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.exe
 C:\Software Development\Work\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.pdb
+C:\Users\djoyce\Documents\GitHub\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.exe
+C:\Users\djoyce\Documents\GitHub\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.pdb
+C:\Users\djoyce\Documents\GitHub\SQLTabletoClass\SQLTabletoClass\bin\Debug\SQLTabletoClass.exe
+C:\Users\djoyce\Documents\GitHub\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.csprojResolveAssemblyReference.cache
+C:\Users\djoyce\Documents\GitHub\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.Form1.resources
+C:\Users\djoyce\Documents\GitHub\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.Properties.Resources.resources
+C:\Users\djoyce\Documents\GitHub\SQLTabletoClass\SQLTabletoClass\obj\Debug\SQLTabletoClass.csproj.GenerateResource.Cache
+C:\Users\djoyce\Documents\GitHub\SQLTabletoClass\SQLTabletoClass\bin\Debug\SQLTabletoClass.pdb

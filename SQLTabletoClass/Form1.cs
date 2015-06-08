@@ -25,7 +25,7 @@ namespace SQLTabletoClass
             try
             {
                 MSSQL DatabaseConnection = new MSSQL(GetConnectionString());
-                cboTables.DataSource = DatabaseConnection.GetDatabaseTable("SELECT TABLE_NAME FROM " + txtDatabase.Text + ".INFORMATION_SCHEMA.Tables " +
+                cboTables.DataSource = DatabaseConnection.GetDatabaseTable("SELECT TABLE_NAME FROM " + txtDatabase.Text + ".INFORMATION_SCHEMA.TABLES " +
                                                                             "WHERE TABLE_TYPE = 'BASE TABLE' ORDER BY TABLE_NAME");
             } catch (Exception ex)
             {
