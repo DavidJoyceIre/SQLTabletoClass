@@ -55,8 +55,17 @@ namespace SQLTabletoClass
                 {
                     for (int iI = 0; iI < VariableTable.Rows.Count; iI++)
                     {
+                        string PropertyComment = "";
+
+                        if (VariableTable.Rows[iI]["Comment"].ToString() != "")
+                        {
+                            PropertyComment = "        /// <summary>\n" +
+                                             "        /// " + VariableTable.Rows[iI]["Comment"] + "\n" +
+                                             "        /// </summary>\n";
+                        }
+
                         privateVariables += "           private " + VariableTable.Rows[iI]["ColumnType"] + " _" + VariableTable.Rows[iI]["ColumnName"] + ";\n";
-                        propertyVariables += "        public " + VariableTable.Rows[iI]["ColumnType"] + " " + VariableTable.Rows[iI]["ColumnName"] + 
+                        propertyVariables += PropertyComment + "        public " + VariableTable.Rows[iI]["ColumnType"] + " " + VariableTable.Rows[iI]["ColumnName"] + 
                                                     " { get { return _" + VariableTable.Rows[iI]["ColumnName"] + "; } set { _" 
                                                     + VariableTable.Rows[iI]["ColumnName"] + " = value; } }\n";
                     }
@@ -84,8 +93,17 @@ namespace SQLTabletoClass
                 {
                     for (int iI = 0; iI < VariableTable.Rows.Count; iI++)
                     {
+                        string PropertyComment = "";
+
+                        if (VariableTable.Rows[iI]["Comment"].ToString() != "")
+                        {
+                            PropertyComment = "        ''' <summary>\n" +
+                                             "        ''' " + VariableTable.Rows[iI]["Comment"] + "\n" +
+                                             "        ''' </summary>\n";
+                        }
                         privateVariables += "           Private " + " _" + VariableTable.Rows[iI]["ColumnName"] + " As " + VariableTable.Rows[iI]["ColumnType"] + "\n";
-                        propertyVariables += "        Public Property " + VariableTable.Rows[iI]["ColumnName"] + "() As " + VariableTable.Rows[iI]["ColumnType"] +
+                        propertyVariables += PropertyComment +
+                            "        Public Property " + VariableTable.Rows[iI]["ColumnName"] + "() As " + VariableTable.Rows[iI]["ColumnType"] +
                                                     "\n             Get\n                   Return _" + VariableTable.Rows[iI]["ColumnName"] + "\n             End Get\n" +
                                                     "             Set(ByVal value As " + VariableTable.Rows[iI]["ColumnType"] + ")\n" + 
                                                     "                   _" + VariableTable.Rows[iI]["ColumnName"] +
@@ -209,8 +227,10 @@ namespace SQLTabletoClass
                 "WHEN 'varchar' then 'string'               " +
                 "ELSE 'UNKNOWN_' + typ.name                ";
             }
-            selectString += "END ColumnType, object_definition(col.default_object_id) AS DefaultValue FROM sys.columns col JOIN sys.types typ on col.system_type_id = typ.system_type_id AND col.user_type_id = typ.user_type_id " +
-                                        "WHERE object_id = object_id('" + tableName + "')";
+            selectString += "END ColumnType, object_definition(col.default_object_id) AS DefaultValue, sep.value AS Comment FROM sys.columns col " +
+                            "JOIN sys.types typ on col.system_type_id = typ.system_type_id AND col.user_type_id = typ.user_type_id " +
+                            "left join sys.extended_properties sep on col.column_id = sep.minor_id and sep.name = 'MS_Description'" +
+                            "WHERE object_id = object_id('" + tableName + "')";
 
             return selectString;
         }
