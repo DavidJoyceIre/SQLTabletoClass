@@ -84,7 +84,7 @@ namespace SQLTabletoClass
 
             MSSQL DatabaseConnection = new MSSQL(GetConnectionString());
 
-            txtClass.Text += "Namespace " + txtDatabase.Text + "\n" +
+            txtClass.Text = "Namespace " + txtDatabase.Text + "\n" +
                                 "    Public Class " + cboTables.Text + "\n\n";
 
             using (System.Data.DataTable VariableTable = DatabaseConnection.GetDatabaseTable(SelectColumns(cboTables.Text)))
@@ -229,7 +229,7 @@ namespace SQLTabletoClass
             }
             selectString += "END ColumnType, object_definition(col.default_object_id) AS DefaultValue, sep.value AS Comment FROM sys.columns col " +
                             "JOIN sys.types typ on col.system_type_id = typ.system_type_id AND col.user_type_id = typ.user_type_id " +
-                            "left join sys.extended_properties sep on col.column_id = sep.minor_id and sep.name = 'MS_Description'" +
+                            "left join sys.extended_properties sep on object_id = sep.major_id AND col.column_id = sep.minor_id and sep.name = 'MS_Description' " +
                             "WHERE object_id = object_id('" + tableName + "')";
 
             return selectString;
