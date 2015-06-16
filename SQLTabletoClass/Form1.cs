@@ -57,12 +57,13 @@ namespace SQLTabletoClass
                     {
                         string PropertyComment = "";
 
+                        PropertyComment = "        /// <summary>\n";
                         if (VariableTable.Rows[iI]["Comment"].ToString() != "")
                         {
-                            PropertyComment = "        /// <summary>\n" +
-                                             "        /// " + VariableTable.Rows[iI]["Comment"] + "\n" +
-                                             "        /// </summary>\n";
+                            PropertyComment += "        /// " + VariableTable.Rows[iI]["Comment"] + "\n";                                             
                         }
+                        PropertyComment += "        /// <para>SQL Column Type: " + VariableTable.Rows[iI]["sqlColumnType"] + "</para>\n";
+                        PropertyComment += "        /// </summary>\n";
 
                         privateVariables += "           private " + VariableTable.Rows[iI]["ColumnType"] + " _" + VariableTable.Rows[iI]["ColumnName"] + ";\n";
                         propertyVariables += PropertyComment + "        public " + VariableTable.Rows[iI]["ColumnType"] + " " + VariableTable.Rows[iI]["ColumnName"] + 
@@ -95,12 +96,14 @@ namespace SQLTabletoClass
                     {
                         string PropertyComment = "";
 
+                        PropertyComment = "        ''' <summary>\n";
                         if (VariableTable.Rows[iI]["Comment"].ToString() != "")
                         {
-                            PropertyComment = "        ''' <summary>\n" +
-                                             "        ''' " + VariableTable.Rows[iI]["Comment"] + "\n" +
-                                             "        ''' </summary>\n";
+                            PropertyComment += "        ''' " + VariableTable.Rows[iI]["Comment"] + "\n";
                         }
+                        PropertyComment += "        ''' <para>SQL Column Type: " + VariableTable.Rows[iI]["sqlColumnType"] + "</para>\n";
+                        PropertyComment += "        ''' </summary>\n";
+
                         privateVariables += "           Private " + " _" + VariableTable.Rows[iI]["ColumnName"] + " As " + VariableTable.Rows[iI]["ColumnType"] + "\n";
                         propertyVariables += PropertyComment +
                             "        Public Property " + VariableTable.Rows[iI]["ColumnName"] + "() As " + VariableTable.Rows[iI]["ColumnType"] +
@@ -227,10 +230,17 @@ namespace SQLTabletoClass
                 "WHEN 'varchar' then 'string'               " +
                 "ELSE 'UNKNOWN_' + typ.name                ";
             }
-            selectString += "END ColumnType, object_definition(col.default_object_id) AS DefaultValue, sep.value AS Comment FROM sys.columns col " +
-                            "JOIN sys.types typ on col.system_type_id = typ.system_type_id AND col.user_type_id = typ.user_type_id " +
-                            "left join sys.extended_properties sep on object_id = sep.major_id AND col.column_id = sep.minor_id and sep.name = 'MS_Description' " +
-                            "WHERE object_id = object_id('" + tableName + "')";
+            selectString += "END ColumnType, object_definition(col.default_object_id) AS DefaultValue, sep.value AS Comment, CASE typ.name " +
+                "WHEN 'int' THEN  UPPER(typ.name ) + '(' + CAST(col.[precision] AS VARCHAR(50)) + ')' " +
+                "WHEN 'decimal' THEN  UPPER(typ.name ) + '(' + CAST(col.[precision] AS VARCHAR(50)) + ',' + CAST(col.scale AS VARCHAR(50)) + ')' " +
+                "WHEN 'varchar' THEN  UPPER(typ.name ) + '(' + CAST(col.max_length AS VARCHAR(50)) + ')' " + 
+                "WHEN 'nvarchar' THEN  UPPER(typ.name ) + '(' + CAST(col.max_length AS VARCHAR(50)) + ')' " +
+                "WHEN 'nchar' THEN  UPPER(typ.name ) + '(' + CAST(col.max_length AS VARCHAR(50)) + ')' " +
+                "WHEN 'char' THEN  UPPER(typ.name ) + '(' + CAST(col.max_length AS VARCHAR(50)) + ')' " +
+                "ELSE UPPER(typ.name ) END AS sqlColumnType FROM sys.columns col " +
+                "JOIN sys.types typ on col.system_type_id = typ.system_type_id AND col.user_type_id = typ.user_type_id " +
+                "left join sys.extended_properties sep on object_id = sep.major_id AND col.column_id = sep.minor_id and sep.name = 'MS_Description' " +
+                "WHERE object_id = object_id('" + tableName + "')";
 
             return selectString;
         }
