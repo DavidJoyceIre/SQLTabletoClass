@@ -63,6 +63,7 @@ namespace SQLTabletoClass
                             PropertyComment += "        /// " + VariableTable.Rows[iI]["Comment"] + "\n";                                             
                         }
                         PropertyComment += "        /// <para>SQL Column Type: " + VariableTable.Rows[iI]["sqlColumnType"] + "</para>\n";
+                        PropertyComment += GetColumnIndex(cboTables.Text, VariableTable.Rows[iI]["ColumnName"].ToString());
                         PropertyComment += "        /// </summary>\n";
 
                         privateVariables += "           private " + VariableTable.Rows[iI]["ColumnType"] + " _" + VariableTable.Rows[iI]["ColumnName"] + ";\n";
@@ -74,7 +75,7 @@ namespace SQLTabletoClass
             }
             txtClass.Text += "        #region Declaration\n" + privateVariables + 
                             "        #endregion\n\n" + propertyVariables;
-            txtClass.Text += "\n    }\n}";
+            txtClass.Text += "\n" +  GenerateIndexComments(cboTables.Text, false) + "\n    }\n}";
         }
 
         private void btnConvertToVBClass_Click(object sender, EventArgs e)
@@ -116,6 +117,8 @@ namespace SQLTabletoClass
             }
             txtClass.Text += "#Region \"Declaration\"\n" + privateVariables +
                             "#End Region\n\n" + propertyVariables;
+
+            txtClass.Text += GenerateIndexComments(cboTables.Text, true);
             txtClass.Text += "\n    End Class\nEnd Namespace";
 
         }
@@ -243,6 +246,98 @@ namespace SQLTabletoClass
                 "WHERE object_id = object_id('" + tableName + "')";
 
             return selectString;
+        }
+
+        private string GenerateIndexComments(string tableName, Boolean isVB)
+        {
+            string indexComment = "";
+            MSSQL DatabaseConnection = new MSSQL(GetConnectionString());
+            string sqlStatement = GetIndexSQL(tableName);
+            using (System.Data.DataTable VariableTable = DatabaseConnection.GetDatabaseTable(sqlStatement))
+            {
+                if (VariableTable != null)
+                {
+                    if (!isVB) { indexComment += "        /***\n"; }
+                    for (int iI = 0; iI < VariableTable.Rows.Count; iI++)
+                    {
+                        if (!isVB)
+                        {
+                            indexComment += "         ===============================\n" +
+                                            "         Index: " + VariableTable.Rows[iI]["name"].ToString() + ", Primary Key: " + VariableTable.Rows[iI]["is_primary_key"].ToString() + "\n" +
+                                            "         ===============================\n" +
+                                            "         " + VariableTable.Rows[iI]["Column1"].ToString() + "\n" +
+                                            "         " + VariableTable.Rows[iI]["Column2"].ToString() + "\n" +
+                                            "         " + VariableTable.Rows[iI]["Column3"].ToString() + "\n" +
+                                            "         " + VariableTable.Rows[iI]["Column4"].ToString() + "\n" +
+                                            "         " + VariableTable.Rows[iI]["Column5"].ToString() + "\n" +
+                                            "         " + VariableTable.Rows[iI]["Column6"].ToString() + "\n";
+                        }
+                        else
+                        {
+                            indexComment += "        '===============================\n" +
+                                            "        'Index: " + VariableTable.Rows[iI]["name"].ToString() + ", Primary Key: " + VariableTable.Rows[iI]["is_primary_key"].ToString() + "\n" +
+                                            "        '===============================\n" +
+                                            "        '" + VariableTable.Rows[iI]["Column1"].ToString() + "\n" +
+                                            "        '" + VariableTable.Rows[iI]["Column2"].ToString() + "\n" +
+                                            "        '" + VariableTable.Rows[iI]["Column3"].ToString() + "\n" +
+                                            "        '" + VariableTable.Rows[iI]["Column4"].ToString() + "\n" +
+                                            "        '" + VariableTable.Rows[iI]["Column5"].ToString() + "\n" +
+                                            "        '" + VariableTable.Rows[iI]["Column6"].ToString() + "\n";
+                        }
+                    }
+                    if (!isVB) { indexComment += "         ***/"; }
+                }
+            }
+            
+            return indexComment;
+        }
+
+        private string GetIndexSQL(string tableName)
+        {
+            return "SELECT si.name, is_primary_key, " +
+	                    "INDEX_COL('" + tableName + "', index_id, 1) AS Column1, " +
+	                    "INDEX_COL('" + tableName + "', index_id, 2) AS Column2, " +
+	                    "INDEX_COL('" + tableName + "', index_id, 3) AS Column3, " +
+	                    "INDEX_COL('" + tableName + "', index_id, 4) AS Column4, " +
+	                    "INDEX_COL('" + tableName + "', index_id, 5) AS Column5, " +
+	                    "INDEX_COL('" + tableName + "', index_id, 6) AS Column6 FROM sys.indexes AS si " +
+                        "LEFT JOIN sys.objects as so on so.object_id=si.object_id " +
+                        "WHERE OBJECT_NAME(si.object_id) = '" + tableName +"'";
+        }
+
+        public string GetColumnIndex(string tableName, string columnName)
+        {
+            string XMLDoc = "";
+            MSSQL DatabaseConnection = new MSSQL(GetConnectionString());
+            string SQL = "SELECT si.name, is_primary_key FROM sys.indexes AS si LEFT JOIN sys.objects as so on so.object_id=si.object_id WHERE OBJECT_NAME(si.object_id) = '" + tableName + "' " +
+                            "AND (INDEX_COL(schema_name(schema_id)+'.'+OBJECT_NAME(si.object_id),index_id,1) = '" + columnName + "' OR " +
+                            "INDEX_COL(schema_name(schema_id)+'.'+OBJECT_NAME(si.object_id),index_id,2) = '" + columnName + "' OR " +
+                            "INDEX_COL(schema_name(schema_id)+'.'+OBJECT_NAME(si.object_id),index_id,3) = '" + columnName + "' OR " +
+                            "INDEX_COL(schema_name(schema_id)+'.'+OBJECT_NAME(si.object_id),index_id,4) = '" + columnName + "' OR " +
+                            "INDEX_COL(schema_name(schema_id)+'.'+OBJECT_NAME(si.object_id),index_id,5) = '" + columnName + "' OR " +
+                            "INDEX_COL(schema_name(schema_id)+'.'+OBJECT_NAME(si.object_id),index_id,6) = '" + columnName + "')";
+
+            using (System.Data.DataTable VariableTable = DatabaseConnection.GetDatabaseTable(SQL))
+            {
+                if (VariableTable != null)
+                {
+                    for (int iI = 0; iI < VariableTable.Rows.Count; iI++)
+                    {
+                        XMLDoc += " /// <para>Index Name: " + VariableTable.Rows[iI]["name"].ToString();
+                        if (VariableTable.Rows[iI]["is_primary_key"].ToString().ToLower() == "true")
+                        {
+                            XMLDoc += ", Primary Key: Yes";
+                        }
+                        else
+                        {
+                            XMLDoc += ", Primary Key: No";
+                        }
+                        XMLDoc += "</para>\n";
+                    }
+                }
+            }
+
+            return XMLDoc;
         }
     }
 }
