@@ -260,35 +260,41 @@ namespace SQLTabletoClass
                     if (!isVB) { indexComment += "        /***\n"; }
                     for (int iI = 0; iI < VariableTable.Rows.Count; iI++)
                     {
-                        if (!isVB)
+                        if (VariableTable.Rows[iI]["name"].ToString() != "")
                         {
-                            indexComment += "         ===============================\n" +
-                                            "         Index: " + VariableTable.Rows[iI]["name"].ToString() + ", Primary Key: " + VariableTable.Rows[iI]["is_primary_key"].ToString() + "\n" +
-                                            "         ===============================\n" +
-                                            "         " + VariableTable.Rows[iI]["Column1"].ToString() + "\n" +
-                                            "         " + VariableTable.Rows[iI]["Column2"].ToString() + "\n" +
-                                            "         " + VariableTable.Rows[iI]["Column3"].ToString() + "\n" +
-                                            "         " + VariableTable.Rows[iI]["Column4"].ToString() + "\n" +
-                                            "         " + VariableTable.Rows[iI]["Column5"].ToString() + "\n" +
-                                            "         " + VariableTable.Rows[iI]["Column6"].ToString() + "\n";
-                        }
-                        else
-                        {
-                            indexComment += "        '===============================\n" +
-                                            "        'Index: " + VariableTable.Rows[iI]["name"].ToString() + ", Primary Key: " + VariableTable.Rows[iI]["is_primary_key"].ToString() + "\n" +
-                                            "        '===============================\n" +
-                                            "        '" + VariableTable.Rows[iI]["Column1"].ToString() + "\n" +
-                                            "        '" + VariableTable.Rows[iI]["Column2"].ToString() + "\n" +
-                                            "        '" + VariableTable.Rows[iI]["Column3"].ToString() + "\n" +
-                                            "        '" + VariableTable.Rows[iI]["Column4"].ToString() + "\n" +
-                                            "        '" + VariableTable.Rows[iI]["Column5"].ToString() + "\n" +
-                                            "        '" + VariableTable.Rows[iI]["Column6"].ToString() + "\n";
+                            if (!isVB)
+                            {
+                                indexComment += "         ===============================\n" +
+                                                "         Index: " + VariableTable.Rows[iI]["name"].ToString() + ", Primary Key: " + VariableTable.Rows[iI]["is_primary_key"].ToString() + "\n" +
+                                                "         ===============================\n" +
+                                                "         " + VariableTable.Rows[iI]["Column1"].ToString() + "\n" +
+                                                "         " + VariableTable.Rows[iI]["Column2"].ToString() + "\n" +
+                                                "         " + VariableTable.Rows[iI]["Column3"].ToString() + "\n" +
+                                                "         " + VariableTable.Rows[iI]["Column4"].ToString() + "\n" +
+                                                "         " + VariableTable.Rows[iI]["Column5"].ToString() + "\n" +
+                                                "         " + VariableTable.Rows[iI]["Column6"].ToString() + "\n";
+                            }
+                            else
+                            {
+                                indexComment += "        '===============================\n" +
+                                                "        'Index: " + VariableTable.Rows[iI]["name"].ToString() + ", Primary Key: " + VariableTable.Rows[iI]["is_primary_key"].ToString() + "\n" +
+                                                "        '===============================\n" +
+                                                "        '" + VariableTable.Rows[iI]["Column1"].ToString() + "\n" +
+                                                "        '" + VariableTable.Rows[iI]["Column2"].ToString() + "\n" +
+                                                "        '" + VariableTable.Rows[iI]["Column3"].ToString() + "\n" +
+                                                "        '" + VariableTable.Rows[iI]["Column4"].ToString() + "\n" +
+                                                "        '" + VariableTable.Rows[iI]["Column5"].ToString() + "\n" +
+                                                "        '" + VariableTable.Rows[iI]["Column6"].ToString() + "\n";
+                            }
                         }
                     }
                     if (!isVB) { indexComment += "         ***/"; }
                 }
             }
-            
+            if (indexComment.Length == 26)
+            {
+                indexComment = "";
+            }
             return indexComment;
         }
 
