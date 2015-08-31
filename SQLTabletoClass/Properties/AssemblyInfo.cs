@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SQLTabletoClass")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Uses details from the SYS tables to create Properties based on their type. It uses MS_Description to show SUMMARY detail. Saves the table to a physical file using the correct extension")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CaherSoftware")]
 [assembly: AssemblyProduct("SQLTabletoClass")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2015.7.20.1125")]
-[assembly: AssemblyFileVersion("2015.7.20.1125")]
+[assembly: AssemblyVersion("2015.8.31.1900")]
+[assembly: AssemblyFileVersion("2015.8.31.1900")]
