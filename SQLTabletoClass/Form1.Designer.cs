@@ -45,6 +45,8 @@
             this.btnSaveToFile = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.btnConvertToVBClass = new System.Windows.Forms.Button();
+            this.btnDatabasetoVB = new System.Windows.Forms.Button();
+            this.btnDatabaseToC = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -61,14 +63,14 @@
             this.txtServer.Location = new System.Drawing.Point(7, 23);
             this.txtServer.Name = "txtServer";
             this.txtServer.Size = new System.Drawing.Size(222, 22);
-            this.txtServer.TabIndex = 1;
+            this.txtServer.TabIndex = 0;
             // 
             // txtDatabase
             // 
             this.txtDatabase.Location = new System.Drawing.Point(7, 68);
             this.txtDatabase.Name = "txtDatabase";
             this.txtDatabase.Size = new System.Drawing.Size(222, 22);
-            this.txtDatabase.TabIndex = 3;
+            this.txtDatabase.TabIndex = 1;
             // 
             // label2
             // 
@@ -84,7 +86,7 @@
             this.txtUserID.Location = new System.Drawing.Point(7, 113);
             this.txtUserID.Name = "txtUserID";
             this.txtUserID.Size = new System.Drawing.Size(222, 22);
-            this.txtUserID.TabIndex = 5;
+            this.txtUserID.TabIndex = 2;
             // 
             // label3
             // 
@@ -101,7 +103,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(222, 22);
-            this.txtPassword.TabIndex = 7;
+            this.txtPassword.TabIndex = 3;
             // 
             // label4
             // 
@@ -146,7 +148,7 @@
             this.btnConvertToClass.Location = new System.Drawing.Point(7, 288);
             this.btnConvertToClass.Name = "btnConvertToClass";
             this.btnConvertToClass.Size = new System.Drawing.Size(222, 39);
-            this.btnConvertToClass.TabIndex = 11;
+            this.btnConvertToClass.TabIndex = 4;
             this.btnConvertToClass.Text = "Convert to C# Class";
             this.btnConvertToClass.UseVisualStyleBackColor = true;
             this.btnConvertToClass.Click += new System.EventHandler(this.btnConvertToClass_Click);
@@ -168,7 +170,7 @@
             this.btnSaveToFile.Location = new System.Drawing.Point(7, 540);
             this.btnSaveToFile.Name = "btnSaveToFile";
             this.btnSaveToFile.Size = new System.Drawing.Size(222, 39);
-            this.btnSaveToFile.TabIndex = 13;
+            this.btnSaveToFile.TabIndex = 8;
             this.btnSaveToFile.Text = "Save to File";
             this.btnSaveToFile.UseVisualStyleBackColor = true;
             this.btnSaveToFile.Click += new System.EventHandler(this.btnSaveToFile_Click);
@@ -178,16 +180,38 @@
             this.btnConvertToVBClass.Location = new System.Drawing.Point(7, 333);
             this.btnConvertToVBClass.Name = "btnConvertToVBClass";
             this.btnConvertToVBClass.Size = new System.Drawing.Size(222, 39);
-            this.btnConvertToVBClass.TabIndex = 14;
+            this.btnConvertToVBClass.TabIndex = 5;
             this.btnConvertToVBClass.Text = "Convert to VB Class";
             this.btnConvertToVBClass.UseVisualStyleBackColor = true;
             this.btnConvertToVBClass.Click += new System.EventHandler(this.btnConvertToVBClass_Click);
+            // 
+            // btnDatabasetoVB
+            // 
+            this.btnDatabasetoVB.Location = new System.Drawing.Point(7, 423);
+            this.btnDatabasetoVB.Name = "btnDatabasetoVB";
+            this.btnDatabasetoVB.Size = new System.Drawing.Size(222, 39);
+            this.btnDatabasetoVB.TabIndex = 7;
+            this.btnDatabasetoVB.Text = "Convert Database to VB";
+            this.btnDatabasetoVB.UseVisualStyleBackColor = true;
+            this.btnDatabasetoVB.Click += new System.EventHandler(this.btnDatabasetoVB_Click);
+            // 
+            // btnDatabaseToC
+            // 
+            this.btnDatabaseToC.Location = new System.Drawing.Point(7, 378);
+            this.btnDatabaseToC.Name = "btnDatabaseToC";
+            this.btnDatabaseToC.Size = new System.Drawing.Size(222, 39);
+            this.btnDatabaseToC.TabIndex = 6;
+            this.btnDatabaseToC.Text = "Convert Database to C#";
+            this.btnDatabaseToC.UseVisualStyleBackColor = true;
+            this.btnDatabaseToC.Click += new System.EventHandler(this.btnDatabaseToC_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(965, 581);
+            this.Controls.Add(this.btnDatabaseToC);
+            this.Controls.Add(this.btnDatabasetoVB);
             this.Controls.Add(this.btnConvertToVBClass);
             this.Controls.Add(this.btnSaveToFile);
             this.Controls.Add(this.txtClass);
@@ -233,6 +257,8 @@
         private System.Windows.Forms.Button btnSaveToFile;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button btnConvertToVBClass;
+        private System.Windows.Forms.Button btnDatabasetoVB;
+        private System.Windows.Forms.Button btnDatabaseToC;
     }
 }
 

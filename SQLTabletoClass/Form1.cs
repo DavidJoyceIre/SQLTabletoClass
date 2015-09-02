@@ -345,5 +345,54 @@ namespace SQLTabletoClass
 
             return XMLDoc;
         }
+
+        private void btnDatabaseToC_Click(object sender, EventArgs e)
+        {
+            IsVBClass = false;
+            ExportDatabase();
+        }
+
+        private void btnDatabasetoVB_Click(object sender, EventArgs e)
+        {
+            IsVBClass = true;
+            ExportDatabase();
+        }
+
+        private void ExportDatabase()
+        {
+            string SelectedPath = "";
+            string fileExtension = ".cs";
+            if (IsVBClass)
+            {
+                fileExtension = ".vb";
+            }
+            if (folderBrowserDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                SelectedPath = folderBrowserDialog1.SelectedPath;
+                if (SelectedPath != "")
+                {
+                    for (int iI = 0; iI <= cboTables.Items.Count - 1; iI++)
+                    {
+                        cboTables.SelectedIndex = iI;
+                        if (!IsVBClass)
+                        {
+                            btnConvertToClass_Click(null, null);
+                        }
+                        else
+                        {
+                            btnConvertToVBClass_Click(null, null);
+                        }
+                        Application.DoEvents();
+                        System.IO.StreamWriter writetext = new System.IO.StreamWriter(SelectedPath + "\\" + cboTables.Text + fileExtension);
+                        writetext.WriteLine(txtClass.Text);
+                        writetext.Close();
+                    }
+
+
+
+                    MessageBox.Show("Database " + txtDatabase.Text + " has been converted", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
     }
 }
