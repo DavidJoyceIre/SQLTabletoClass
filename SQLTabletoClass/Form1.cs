@@ -157,7 +157,7 @@ namespace SQLTabletoClass
             }
             else
             {
-                ConnectionString += "Integrated Security=SSPI";
+                ConnectionString += "Integrated Security=" + cboIS.Text;
             }
             if (txtPassword.Text != "")
             {
@@ -393,6 +393,11 @@ namespace SQLTabletoClass
                     MessageBox.Show("Database " + txtDatabase.Text + " has been converted", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            cboIS.SelectedIndex = 0;
         }
     }
 }
