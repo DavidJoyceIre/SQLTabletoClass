@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace SQLTabletoClass
@@ -19,7 +20,52 @@ namespace SQLTabletoClass
         {
             InitializeComponent();
         }
-
+        private void ApplySyntax()
+        {
+            //General
+            string tokens = "(auto|double|int|struct|break|else|long|switch|case|enum|register|typedef|char|extern|return|union|const|float|short|unsigned|continue|for" +
+                            "|signed|void|default|goto|sizeof|volatile|do|if|static|while|private|void|using|namespace|public|class|#region|#endregion|string|get|set|value" +
+                            "|decimal)";
+            Regex rex = new Regex(tokens);
+            MatchCollection mc = rex.Matches(txtClass.Text);
+            int StartCursorPosition = txtClass.SelectionStart;
+            foreach (Match m in mc)
+            {
+                int startIndex = m.Index;
+                int StopIndex = m.Length;
+                txtClass.Select(startIndex, StopIndex);
+                txtClass.SelectionColor = Color.Blue;
+                txtClass.SelectionStart = StartCursorPosition;
+                txtClass.SelectionColor = Color.Black;
+            }
+            tokens = "(DateTime)";
+            rex = new Regex(tokens);
+            mc = rex.Matches(txtClass.Text);
+            StartCursorPosition = txtClass.SelectionStart;
+            foreach (Match m in mc)
+            {
+                int startIndex = m.Index;
+                int StopIndex = m.Length;
+                txtClass.Select(startIndex, StopIndex);
+                txtClass.SelectionColor = Color.FromArgb(43,145, 175);
+                txtClass.SelectionStart = StartCursorPosition;
+                txtClass.SelectionColor = Color.Black;
+            }
+            // Parameters
+            tokens = "(/// <summary>|/// </summary>|/// <para>|</para>)";
+            rex = new Regex(tokens);
+            mc = rex.Matches(txtClass.Text);
+            StartCursorPosition = txtClass.SelectionStart;
+            foreach (Match m in mc)
+            {
+                int startIndex = m.Index;
+                int StopIndex = m.Length;
+                txtClass.Select(startIndex, StopIndex);
+                txtClass.SelectionColor = Color.FromArgb(128, 128, 128);
+                txtClass.SelectionStart = StartCursorPosition;
+                txtClass.SelectionColor = Color.Black;
+            }
+        }
         private void btnGetTables_Click(object sender, EventArgs e)
         {
             try
@@ -76,6 +122,7 @@ namespace SQLTabletoClass
             txtClass.Text += "        #region Declaration\n" + privateVariables + 
                             "        #endregion\n\n" + propertyVariables;
             txtClass.Text += "\n" +  GenerateIndexComments(cboTables.Text, false) + "\n    }\n}";
+            ApplySyntax();
         }
 
         private void btnConvertToVBClass_Click(object sender, EventArgs e)
@@ -120,6 +167,7 @@ namespace SQLTabletoClass
 
             txtClass.Text += GenerateIndexComments(cboTables.Text, true);
             txtClass.Text += "\n    End Class\nEnd Namespace";
+            ApplySyntax();
 
         }
 
@@ -329,7 +377,7 @@ namespace SQLTabletoClass
                 {
                     for (int iI = 0; iI < VariableTable.Rows.Count; iI++)
                     {
-                        XMLDoc += " /// <para>Index Name: " + VariableTable.Rows[iI]["name"].ToString();
+                        XMLDoc += "        /// <para>Index Name: " + VariableTable.Rows[iI]["name"].ToString();
                         if (VariableTable.Rows[iI]["is_primary_key"].ToString().ToLower() == "true")
                         {
                             XMLDoc += ", Primary Key: Yes";
