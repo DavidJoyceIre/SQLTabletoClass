@@ -89,7 +89,8 @@ namespace SQLTabletoClass
             
             txtClass.Text = "using System;\n" +
                             "using System.Collections.Generic;\n" +
-                            "using System.Text;\n\n";
+                            "using System.Text;\n" +
+                            "using System.Diagnostics;\n\n";
 
             txtClass.Text += "namespace " + txtDatabase.Text + "\n{\n" +
                                 "    public class " + cboTables.Text + "\n    {\n\n" +
@@ -112,7 +113,7 @@ namespace SQLTabletoClass
                         PropertyComment += GetColumnIndex(cboTables.Text, VariableTable.Rows[iI]["ColumnName"].ToString());
                         PropertyComment += "        /// </summary>\n";
 
-                        privateVariables += "           private " + VariableTable.Rows[iI]["ColumnType"] + " _" + VariableTable.Rows[iI]["ColumnName"] + ";\n";
+                        privateVariables += "           [DebuggerBrowsable(DebuggerBrowsableState.Never)]\n           private " + VariableTable.Rows[iI]["ColumnType"] + " _" + VariableTable.Rows[iI]["ColumnName"] + ";\n";
                         propertyVariables += PropertyComment + "        public " + VariableTable.Rows[iI]["ColumnType"] + " " + VariableTable.Rows[iI]["ColumnName"] + 
                                                     " { get { return _" + VariableTable.Rows[iI]["ColumnName"] + "; } set { _" 
                                                     + VariableTable.Rows[iI]["ColumnName"] + " = value; } }\n";
