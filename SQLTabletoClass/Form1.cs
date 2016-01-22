@@ -122,7 +122,17 @@ namespace SQLTabletoClass
             }
             txtClass.Text += "        #region Declaration\n" + privateVariables + 
                             "        #endregion\n\n" + propertyVariables;
-            txtClass.Text += "\n" +  GenerateIndexComments(cboTables.Text, false) + "\n    }\n}";
+            txtClass.Text += "\n" +  GenerateIndexComments(cboTables.Text, false) + "\n    }\n}\n\n";
+
+
+            //Mark the class as been created by this program
+            txtClass.Text += "//=======================================================\n";
+            txtClass.Text += "//Class created using SQLTabletoClass\n";
+            txtClass.Text += "//Convert your SQL Database into C# VB.NET Classes\n";
+            txtClass.Text += "//for faster Development\n";
+            txtClass.Text += "//www.cahersoftware.com\n";
+            txtClass.Text += "//=======================================================\n";
+
             ApplySyntax();
         }
 
@@ -167,7 +177,16 @@ namespace SQLTabletoClass
                             "#End Region\n\n" + propertyVariables;
 
             txtClass.Text += GenerateIndexComments(cboTables.Text, true);
-            txtClass.Text += "\n    End Class\nEnd Namespace";
+
+            
+            txtClass.Text += "\n    End Class\nEnd Namespace\n\n";
+            //Mark the class as been created by this program
+            txtClass.Text += "'=======================================================\n";
+            txtClass.Text += "'Class created using SQLTabletoClass\n";            
+            txtClass.Text += "'Convert your SQL Database into C# VB.NET Classes\n";
+            txtClass.Text += "'for faster Development\n";
+            txtClass.Text += "'www.cahersoftware.com\n";
+            txtClass.Text += "'=======================================================\n";
             ApplySyntax();
 
         }
@@ -179,6 +198,27 @@ namespace SQLTabletoClass
             if (IsVBClass)
             {
                 fileExtension = ".vb";
+            }
+
+            if (!txtClass.Text.Contains("www.cahersoftware.com"))
+            {
+                if (IsVBClass)
+                {
+                    txtClass.Text += "'=======================================================\n";
+                    txtClass.Text += "'Class created using SQLTabletoClass\n";
+                    txtClass.Text += "'Convert your SQL Database into C# VB.NET Classes\n";
+                    txtClass.Text += "'for faster Development\n";
+                    txtClass.Text += "'www.cahersoftware.com\n";
+                    txtClass.Text += "'=======================================================\n";
+                } else
+                {
+                    txtClass.Text += "//=======================================================\n";
+                    txtClass.Text += "//Class created using SQLTabletoClass\n";
+                    txtClass.Text += "//Convert your SQL Database into C# VB.NET Classes\n";
+                    txtClass.Text += "//for faster Development\n";
+                    txtClass.Text += "//www.cahersoftware.com\n";
+                    txtClass.Text += "//=======================================================\n";
+                }
             }
             if (folderBrowserDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
